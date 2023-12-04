@@ -14,7 +14,7 @@ public class Calculadora {
         return variavelA * variavelB;
     }
 
-    public int divir(int variavelA, int variavelB){
+    public int dividir(int variavelA, int variavelB){
         return variavelA / variavelB;
     }
 }
