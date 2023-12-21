@@ -23,7 +23,7 @@ public class MensagemRepositoryIT {
     @Test
     void devePermitirCriarTabela(){
         var totalDeRegistros = mensagemRepository.count();
-        assertThat(totalDeRegistros).isNotNegative();
+        assertThat(totalDeRegistros).isGreaterThan(0);
     }
 
     @Test
@@ -49,10 +49,7 @@ public class MensagemRepositoryIT {
     @Test
     void devePermitirBuscarMensagem(){
         //Arrange
-        var id = UUID.randomUUID();
-        var mensagem = gerarMensagem();
-        mensagem.setId(id);
-        registrarMensagem(mensagem);
+        var id = UUID.fromString("a080bb28-cb45-4494-8229-7cc5a3674fbf");
 
         //Act
         var mensagemRecebidaOptional = mensagemRepository.findById(id);
@@ -62,19 +59,30 @@ public class MensagemRepositoryIT {
 
         mensagemRecebidaOptional.ifPresent(mensagemRecebida ->{
             assertThat(mensagemRecebida.getId()).isEqualTo(id);
-            assertThat(mensagemRecebida.getConteudo()).isEqualTo(mensagem.getConteudo());
         });
 
     }
 
     @Test
     void devePermitirExcluirMensagem(){
-        fail("Método não implementado");
+        //Arrange
+        var id = UUID.fromString("acddb9b3-84ea-4377-9916-4a453e7407dc");
+
+        //Act
+        mensagemRepository.deleteById(id);
+        var mensagemRecebidaOpcional = mensagemRepository.findById(id);
+
+        //Assert
+        assertThat(mensagemRecebidaOpcional).isEmpty();
     }
 
     @Test
     void devePermitirListarMensagens(){
-        fail("Método não implementado");
+        //Act
+        var resultadosObtidos = mensagemRepository.findAll();
+
+        //Assert
+        assertThat(resultadosObtidos).hasSizeGreaterThan(0);
     }
 
     private Mensagem gerarMensagem(){
@@ -82,8 +90,5 @@ public class MensagemRepositoryIT {
                 .usuario("Dani")
                 .conteudo("conteúdo da msg")
                 .build();
-    }
-    private Mensagem registrarMensagem(Mensagem mensagem){
-        return mensagemRepository.save(mensagem);
     }
 }

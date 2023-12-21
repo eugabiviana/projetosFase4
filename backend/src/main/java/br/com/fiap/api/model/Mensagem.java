@@ -31,10 +31,56 @@ public class Mensagem {
     private String conteudo;
 
     @Builder.Default
-    private LocalDateTime dataCriacaoMensagem = LocalDateTime.now();
+    private LocalDateTime dataCriacao = LocalDateTime.now();
 
     @Builder.Default
     private int gostei = 0;
 
+//    public Mensagem(UUID id, String usuario, String conteudo, LocalDateTime dataCriacaoMensagem, int gostei) {
+//        this.id = id;
+//        this.usuario = usuario;
+//        this.conteudo = conteudo;
+//        this.dataCriacaoMensagem = dataCriacaoMensagem;
+//        this.gostei = gostei;
+//    }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getConteudo() {
+        return conteudo;
+    }
+
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public LocalDateTime getDataCriacaoMensagem() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacaoMensagem(LocalDateTime dataCriacaoMensagem) {
+        this.dataCriacao = dataCriacaoMensagem;
+    }
+
+    public int getGostei() {
+        return gostei;
+    }
+
+    public void setGostei(int gostei) {
+        this.gostei = gostei;
+    }
 }
