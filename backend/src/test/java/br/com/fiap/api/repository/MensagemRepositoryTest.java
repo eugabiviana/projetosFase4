@@ -1,6 +1,7 @@
 package br.com.fiap.api.repository;
 
 import br.com.fiap.api.model.Mensagem;
+import br.com.fiap.api.repository.MensagemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

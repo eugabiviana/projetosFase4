@@ -1,6 +1,7 @@
 package br.com.fiap.api.repository;
 
 import br.com.fiap.api.model.Mensagem;
+import br.com.fiap.api.repository.MensagemRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
