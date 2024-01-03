@@ -1,5 +1,6 @@
 package br.com.fiap.api.service;
 
+import br.com.fiap.api.exception.MensagemNotFoundException;
 import br.com.fiap.api.model.Mensagem;
 import br.com.fiap.api.repository.MensagemRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,8 @@ public class MensagemServiceImpl implements MensagemService{
 
     @Override
     public Mensagem buscarMensagem(UUID id) {
-        return null;
+        return mensagemRepository.findById(id)
+                .orElseThrow(() -> new MensagemNotFoundException("Mensagem não encontrada!"));
     }
 
     @Override

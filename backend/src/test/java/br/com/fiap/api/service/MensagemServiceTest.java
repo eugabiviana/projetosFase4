@@ -1,5 +1,6 @@
 package br.com.fiap.api.service;
 
+import br.com.fiap.api.exception.MensagemNotFoundException;
 import br.com.fiap.api.model.Mensagem;
 import br.com.fiap.api.repository.MensagemRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -8,10 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class MensagemServiceTest {
 
@@ -48,11 +53,34 @@ class MensagemServiceTest {
         assertThat(mensagemRegistrada.getConteudo()).isEqualTo(mensagem.getConteudo());
         assertThat(mensagemRegistrada.getUsuario()).isEqualTo(mensagem.getUsuario());
         assertThat(mensagemRegistrada.getId()).isNotNull();
+        verify(mensagemRepository, times(1)).save(any(Mensagem.class));
     }
 
     @Test
     void devePermitirBuscarMensagem(){
-        fail("teste não implementado");
+        //Arrange
+        var id = UUID.randomUUID();
+        var mensagem = gerarMensagem();
+        mensagem.setId(id);
+        when(mensagemRepository.findById(id))
+                .thenReturn(Optional.of(mensagem));
+        //Act
+        var mensagemObtida = mensagemService.buscarMensagem(id);
+        //Assert
+        assertThat(mensagemObtida).isEqualTo(mensagem);
+        verify(mensagemRepository, times(1)).findById(any(UUID.class));
+    }
+
+    @Test
+    void deveGerarExcecao_QuandoBuscarMensagem_IdNaoExiste(){
+        var id = UUID.randomUUID();
+        when(mensagemRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(()-> mensagemService.buscarMensagem(id))
+                .isInstanceOf(MensagemNotFoundException.class)
+                .hasMessage("Mensagem não encontrada!");
+        verify(mensagemRepository, times(1)).findById(id);
+
     }
 
     @Test
