@@ -1,7 +1,6 @@
 package br.com.fiap.api.repository;
 
 import br.com.fiap.api.model.Mensagem;
-import br.com.fiap.api.repository.MensagemRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -89,7 +87,7 @@ public class MensagemRepositoryIT {
     private Mensagem gerarMensagem(){
         return Mensagem.builder()
                 .usuario("Dani")
-                .conteudo("conteúdo da msg")
+                .conteudo("É uma linda! <3")
                 .build();
     }
 }
